@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+		<script src="{% static 'js/bootstrap.js' %}"></script>
+        <title>My webpage</title>
+  </head>
+	<body>
+    <!-- navbar that should appear on every page -->
+		<nav class="nav nav-tabs flex-row">
+			<a class="nav-link active" href="#" aria-current="page">Home</a>
+			<a class="nav-link" href="#">Link</a>
+			<a class="nav-link disabled" href="#">Disabled link</a>
+		</nav>
+
+		<div class="card">
+			<div class="card-header">PizzaMin</div>
+			<div class="card-body">
+				<h4 class="card-title">Title</h4>
+				<p class="card-text">Text</p>
+				
+				
+			</div>
+			<div class="card-footer text-muted">Footer</div>
+		</div>
+		
+
+    <!-- placeholder for content to be filled in by subsequent views -->
+		{% block content %}
+
+       <!-- Content provided by other templates will be filled in here -->
+    {% endblock %}
+	</body>
+</html>
