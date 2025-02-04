@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-danger">Pizza Menu</h2>
+
+    <ul class="list-group mx-auto" style="max-width: 600px;">
+        {% for pizza in pizzas %}
+            <li class="list-group-item">
+                <strong>{{ pizza.name }}</strong> - {{ pizza.get_size_display }} <br>
+                <small>
+                    <strong>Crust:</strong> {{ pizza.crust }} | 
+                    <strong>Sauce:</strong> {{ pizza.sauce }} | 
+                    <strong>Cheese:</strong> {{ pizza.cheese }}
+                </small><br>
+                <small>Toppings: 
+                    {% for topping in pizza.toppings.all %}
+                        {{ topping.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </small>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <p class="text-center mt-3">
+        <a href="{% url 'create_pizza' %}" class="btn btn-success">Create a New Pizza</a>
+    </p>
+</div>
+{% endblock %}
+

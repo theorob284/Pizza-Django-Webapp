@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center text-danger">Create Your Own Pizza</h2>
+
+    <form method="post" class="mx-auto" style="max-width: 400px;">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.size.label_tag }}
+            {{ form.size }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.crust.label_tag }}
+            {{ form.crust }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.sauce.label_tag }}
+            {{ form.sauce }}
+        </div>
+
+        <div class="mb-3">
+            {{ form.cheese.label_tag }}
+            {{ form.cheese }}
+        </div>
+
+        <div class="mb-3">
+            <label>Select Toppings:</label>
+            <div class="form-check">
+                {% for topping in form.toppings %}
+                    <div class="form-check">
+                        {{ topping.tag }} {{ topping.choice_label }}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-danger w-100">Create Pizza</button>
+    </form>
+
+    <p class="text-center mt-3">
+        <a href="{% url 'pizza_list' %}">View All Pizzas</a>
+    </p>
+</div>
+{% endblock %}
+

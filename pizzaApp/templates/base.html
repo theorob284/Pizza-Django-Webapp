@@ -7,32 +7,63 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
 		<script src="{% static 'js/bootstrap.js' %}"></script>
-        <title>My webpage</title>
+        <title>Pizza webpage</title>
   </head>
 	<body>
     <!-- navbar that should appear on every page -->
-		<nav class="nav nav-tabs flex-row">
-			<a class="nav-link active" href="#" aria-current="page">Home</a>
-			<a class="nav-link" href="#">Link</a>
-			<a class="nav-link disabled" href="#">Disabled link</a>
+			
+		<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+			<div class="container">
+				<a class="navbar-brand" href="#">PizzaMin 🍕</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNav">
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
+						<li class="nav-item"><a class="nav-link" href="#">Menu</a></li>
+						<li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+						{% if user.is_authenticated %}
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'logout' %}">Logout</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'pizza_list' %}">Pizza Menu</a>
+							</li>
+						{% else %}
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'login' %}">Login</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'register' %}">Register</a>
+							</li>
+						{% endif %}
+					</ul>
+				</div>
+			</div>
 		</nav>
-
+	
 		<div class="card">
 			<div class="card-header">PizzaMin</div>
 			<div class="card-body">
-				<h4 class="card-title">Title</h4>
-				<p class="card-text">Text</p>
+				<!--<h4 class="card-title">Title</h4>
+				<p class="card-text">Text</p> --!>
+				<div class="container mt-4">
+					<!-- placeholder for content to be filled in by subsequent views -->
+					{% block content %}
 				
+					{% endblock %}
+					<!-- Content provided by other templates will be filled in here -->
+				</div>
 				
 			</div>
-			<div class="card-footer text-muted">Footer</div>
+			<div>
+				<footer class="bg-dark text-white text-center p-3 mt-5">
+					<p>&copy; 2025 PizzaMin | The best pizza in town 🍕</p>
+				</footer>
+				
+			</div>
 		</div>
 		
-
-    <!-- placeholder for content to be filled in by subsequent views -->
-		{% block content %}
-
-       <!-- Content provided by other templates will be filled in here -->
-    {% endblock %}
 	</body>
 </html>

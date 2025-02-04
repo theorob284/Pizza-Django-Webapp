@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container text-center mt-5">
+        <h1 class="display-3 text-danger">Welcome to PizzaMin 🍕</h1>
+        <p class="lead">The best pizza in town, delivered to your doorstep!</p>
+        {% if user.is_authenticated %}
+            <!-- Go straight through to last order-->
+            <a href="{% url 'pizza_list' %}" class="btn btn-warning btn-lg">Order Now</a>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn btn-warning btn-lg">Order Now</a>
+        {% endif %}
+    </div>
+{% endblock %}
