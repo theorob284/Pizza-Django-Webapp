@@ -1,9 +1,10 @@
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CustomLoginForm, RegisterForm
 from django.contrib.auth import authenticate, login, logout
 from .forms import PizzaForm
 from .models import Pizza
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
@@ -48,12 +49,14 @@ def create_pizza(request):
             pizza = form.save(commit=False)  # Don't save to DB yet
             pizza.created_by = request.user  # Assign logged-in user
             pizza.save()  # Save to DB
-            return redirect("pizza_list")  # Redirect to pizza list
+            form.save_m2m()
+            return render(request, "order.html", {'pizza': pizza})  # Redirect to pizza list
     else:
         form = PizzaForm()
 
     return render(request, "create_pizza.html", {"form": form})
 
+@login_required
 def pizza_list(request):
-    pizzas = Pizza.objects.all()  # Get all pizzas
+    pizzas = Pizza.objects.filter(created_by=request.user)
     return render(request, "pizza_list.html", {"pizzas": pizzas})

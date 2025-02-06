@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+<strong>
+    {{ pizza.name }}</strong> - {{ pizza.get_size_display }} <br>
+    <small>
+        <strong>Crust:</strong> {{ pizza.crust }} | 
+        <strong>Sauce:</strong> {{ pizza.sauce }} | 
+        <strong>Cheese:</strong> {{ pizza.cheese }}
+    </small><br>
+    <small>Toppings: 
+        {% for topping in pizza.toppings.all %}
+            {{ topping.name }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+</small>
+
+{% endblock %}

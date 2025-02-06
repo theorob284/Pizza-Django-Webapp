@@ -10,3 +10,4 @@ urlpatterns = [
    path("create-pizza/", views.create_pizza, name="create_pizza"),
    path("pizzas/", views.pizza_list, name="pizza_list"),
 ]
+
