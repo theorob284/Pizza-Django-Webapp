@@ -21,7 +21,6 @@
 				<div class="collapse navbar-collapse" id="navbarNav">
 					<ul class="navbar-nav ms-auto">
 						<li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-						<li class="nav-item"><a class="nav-link" href="#">Menu</a></li>
 						<li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
 						{% if user.is_authenticated %}
 							<li class="nav-item">
@@ -41,10 +40,12 @@
 					</ul>
 				</div>
 			</div>
+
+			
 		</nav>
 	
 		<div class="card">
-			<div class="card-header">PizzaMin</div>
+			<!-- <-div class="card-header">PizzaMin, Amazingly delicious pizza for everyone</div> -->
 			<div class="card-body">
 				<!--<h4 class="card-title">Title</h4>
 				<p class="card-text">Text</p> --!>
@@ -57,9 +58,13 @@
 				</div>
 				
 			</div>
+
+			
+			
+
 			<div>
 				<footer class="bg-dark text-white text-center p-3 mt-5">
-					<p>&copy; 2025 PizzaMin | The best pizza in town 🍕</p>
+					<p>&copy; 2025 PizzaMin | The best pizza in town 🍕 || contact us at pizzamin@gmail.com</p>
 				</footer>
 				
 			</div>
