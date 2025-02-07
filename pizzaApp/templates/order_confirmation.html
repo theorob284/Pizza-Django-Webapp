@@ -1,0 +1,31 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<div class="text-center">
+    <h2 class="text-danger">Order Confirmed!</h2>
+    <p>Thank you for your order, {{ pizza.created_by.username }}!</p>
+    <p>Your pizza is on its way.</p>
+
+    <h3 class="text-danger">Order Summary:</h3>
+    <ul class="list-group mx-auto" style="max-width: 600px;">
+        <li class="list-group-item">
+            <strong>{{ pizza.name }}</strong> - {{ pizza.get_size_display }} <br>
+            <small>
+                <strong>Crust:</strong> {{ pizza.crust }} | 
+                <strong>Sauce:</strong> {{ pizza.sauce }} | 
+                <strong>Cheese:</strong> {{ pizza.cheese }}
+            </small><br>
+            <small>Toppings: 
+                {% for topping in pizza.toppings.all %}
+                    {{ topping.name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </small>
+        </li>
+</ul>
+<br>
+
+    <a href="{% url 'home' %}">Return to Home</a>
+</div>
+
+
+{% endblock %}

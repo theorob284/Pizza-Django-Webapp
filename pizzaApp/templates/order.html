@@ -2,17 +2,69 @@
 
 {% block content%}
 
-<strong>
-    {{ pizza.name }}</strong> - {{ pizza.get_size_display }} <br>
-    <small>
-        <strong>Crust:</strong> {{ pizza.crust }} | 
-        <strong>Sauce:</strong> {{ pizza.sauce }} | 
-        <strong>Cheese:</strong> {{ pizza.cheese }}
-    </small><br>
-    <small>Toppings: 
-        {% for topping in pizza.toppings.all %}
-            {{ topping.name }}{% if not forloop.last %}, {% endif %}
-        {% endfor %}
-</small>
+<div class="container mt-5">
+    <h2 class="text-center text-danger">Confirm Your Order</h2>
+
+    <ul class="list-group mx-auto" style="max-width: 600px;">
+            <li class="list-group-item">
+                <strong>{{ pizza.name }}</strong> - {{ pizza.get_size_display }} <br>
+                <small>
+                    <strong>Crust:</strong> {{ pizza.crust }} | 
+                    <strong>Sauce:</strong> {{ pizza.sauce }} | 
+                    <strong>Cheese:</strong> {{ pizza.cheese }}
+                </small><br>
+                <small>Toppings: 
+                    {% for topping in pizza.toppings.all %}
+                        {{ topping.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </small>
+            </li>
+    </ul>
+    <br>
+
+<h3 class="text-center text-danger">Enter Payment Details</h3>
+
+
+<form method="POST">
+    {% csrf_token %}
+
+    <input type="hidden" name="pizza_id" value="{{ pizza.id }}">
+
+    <h6> Please enter your name:</h6>
+    <div class="form-floating mb-3 text-center text-danger">
+        <label for="name"></label>
+        <input type="text" class="form-control" id="name" name="name" required>
+    </div> <br>
+
+    <h6> Please enter your address:</h6>
+    <div class="form-floating mb-3 text-center text-danger">
+        <label for="address"></label>
+        <input type="text" class="form-control" id="address" name="address" required>
+    </div> <br>
+
+    <h6> Please enter your card number:</h6>
+    <div class="form-floating mb-3 text-center text-danger">
+        <label for="card_number"></label>
+        <input type="text" class="form-control" id="card_number" name="card_number" required>
+    </div> <br>
+
+    <h6> Please enter the card expiry date:</h6>
+    <div class="form-floating mb-3 text-center text-danger">
+        <label for="expiry_date"></label>
+        <input type="text" class="form-control" id="expiry_date" name="expiry_date" required>
+    </div> <br>
+
+    <h6> Please enter the cvv:</h6>
+    <div class="form-floating mb-3 text-center">
+        <label for="cvv"></label>
+        <input type="text" class="form-control" id="cvv" name="cvv" required>
+    </div> <br>
+
+    <div class="form-floating mb-3 text-center">
+        <button type="submit">Confirm Order</button>
+    </div>
+</form>
+
+
 
 {% endblock %}

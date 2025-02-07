@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CustomLoginForm, RegisterForm
 from django.contrib.auth import authenticate, login, logout
 from .forms import PizzaForm
-from .models import Pizza
+from .models import Pizza, Payment
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -42,15 +42,57 @@ def register(request):
     
     return render(request, "register.html", {"form": form})
 
+@login_required
 def create_pizza(request):
     if request.method == "POST":
+        if "name" in request.POST and "card_number" in request.POST:
+            name = request.POST.get("name")
+            address = request.POST.get("address")
+            card_number = request.POST.get("card_number")
+            expiry_date = request.POST.get("expiry_date")
+            cvv = request.POST.get("cvv")
+            pizza_id = request.POST.get("pizza_id")
+
+            # 🔹 Retrieve the pizza instance
+            try:
+                pizza = Pizza.objects.get(id=pizza_id, created_by=request.user)
+            except Pizza.DoesNotExist:
+                return render(request, "order.html", {
+                    "error": "Pizza not found or access denied."
+                })
+
+            # 🔹 Validate payment fields
+            if not all([name, address, card_number, expiry_date, cvv]):
+                return render(request, "order.html", {
+                    "pizza": pizza,
+                    "error": "All payment fields are required!"
+                })
+
+            # 🔹 Save payment details (Don't store raw card numbers in production!)
+            Payment.objects.create(
+                user=request.user,
+                pizza=pizza,
+                name=name,
+                address=address,
+                card_number=card_number,  # Encrypt this in real-world apps!
+                expiry_date=expiry_date,
+                cvv=cvv
+            )
+
+            # 🔹 Redirect to confirmation page
+            return render(request, "order_confirmation.html", {"pizza": pizza})
+
+        # 🔹 If the request is for pizza creation
         form = PizzaForm(request.POST)
         if form.is_valid():
-            pizza = form.save(commit=False)  # Don't save to DB yet
+            pizza = form.save(commit=False)
             pizza.created_by = request.user  # Assign logged-in user
-            pizza.save()  # Save to DB
+            pizza.save()
             form.save_m2m()
-            return render(request, "order.html", {'pizza': pizza})  # Redirect to pizza list
+
+            # 🔹 Redirect to order page with the created pizza
+            return render(request, "order.html", {"pizza": pizza})
+
     else:
         form = PizzaForm()
 
@@ -60,3 +102,4 @@ def create_pizza(request):
 def pizza_list(request):
     pizzas = Pizza.objects.filter(created_by=request.user)
     return render(request, "pizza_list.html", {"pizzas": pizzas})
+
