@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2 class="text-center text-danger">Pizza Menu</h2>
+    <h2 class="text-center text-danger">Your created pizzas:</h2>
 
     <ul class="list-group mx-auto" style="max-width: 600px;">
         {% for pizza in pizzas %}
@@ -26,5 +26,6 @@
         <a href="{% url 'create_pizza' %}" class="btn btn-success">Create a New Pizza</a>
     </p>
 </div>
+
 {% endblock %}
 

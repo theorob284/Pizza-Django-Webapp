@@ -45,20 +45,6 @@ class Pizza(models.Model):
         return f"{self.name} ({self.size.name}, {self.crust.name})"
 
 class Payment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Link payment to user
-    full_name = models.CharField(max_length=100)
-    address = models.TextField()
-    city = models.CharField(max_length=50)
-    postal_code = models.CharField(max_length=20)
-    card_number = models.CharField(max_length=16)  # Store only last 4 digits for security
-    card_expiry = models.CharField(max_length=5)   # Format: MM/YY
-    card_cvv = models.CharField(max_length=3)      # Store securely in production
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Payment by {self.user.username} - {self.full_name}"
-
-class Payment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)

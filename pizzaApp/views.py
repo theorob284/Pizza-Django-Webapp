@@ -1,8 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CustomLoginForm, RegisterForm
+from .forms import CustomLoginForm, RegisterForm, PizzaForm
 from django.contrib.auth import authenticate, login, logout
-from .forms import PizzaForm
 from .models import Pizza, Payment
 from django.contrib.auth.decorators import login_required
 
